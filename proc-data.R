@@ -14,6 +14,9 @@ getData <- function() {
   empfit <- lm(pct_emp_grad ~ pct_emp_9 + accept + lsat25 + lsat75, data=dat[!is.na(dat$pct_emp_grad),])
   dat$pct_emp_grad[is.na(dat$pct_emp_grad)] <- predict(empfit, dat[is.na(dat$pct_emp_grad),])  
   
+  # manipulate overall for demo
+  dat$overall <- dat$overall^2
+  
   # Re-scale for use in models
   dat$zpeer_assess <- as.numeric(scale(dat$peer_assess, center = TRUE, scale = TRUE))
   dat$zjudges_assess <- as.numeric(scale(dat$judges_assess, center = TRUE, scale = TRUE))
@@ -66,61 +69,61 @@ original.data <- getData()
 training.data <- subset(original.data,
                         year==2015,
                         select=c(overall,
-                                 zpeer_assess,
-                                 zjudges_assess,
-                                 zgpa25,
-                                 zgpa75,
-                                 zlsat25,
+                                 #zpeer_assess,
+                                 #zjudges_assess,
+                                 #zgpa25,
+                                 #zgpa75,
+                                 #zlsat25,
                                  zlsat75,
-                                 zpct_emp_grad,
+                                 #zpct_emp_grad,
                                  zpct_emp_9,
                                  zaccept,
-                                 zsf_ratio,
+                                 #zsf_ratio,
                                  zbar_pass_pct))
 
 testing.data <- subset(original.data,
                        year==2016,
                        select=c(overall,
-                                zpeer_assess,
-                                zjudges_assess,
-                                zgpa25,
-                                zgpa75,
-                                zlsat25,
+                                #zpeer_assess,
+                                #zjudges_assess,
+                                #zgpa25,
+                                #zgpa75,
+                                #zlsat25,
                                 zlsat75,
-                                zpct_emp_grad,
+                                #zpct_emp_grad,
                                 zpct_emp_9,
                                 zaccept,
-                                zsf_ratio,
+                                #zsf_ratio,
                                 zbar_pass_pct))
 
 cat.training.data <- subset(original.data,
                         year==2015,
                         select=c(tier,
-                                 zpeer_assess,
-                                 zjudges_assess,
-                                 zgpa25,
-                                 zgpa75,
-                                 zlsat25,
+                                 #zpeer_assess,
+                                 #zjudges_assess,
+                                 #zgpa25,
+                                 #zgpa75,
+                                 #zlsat25,
                                  zlsat75,
-                                 zpct_emp_grad,
+                                 #zpct_emp_grad,
                                  zpct_emp_9,
                                  zaccept,
-                                 zsf_ratio,
+                                 #zsf_ratio,
                                  zbar_pass_pct))
 
 cat.testing.data <- subset(original.data,
                        year==2016,
                        select=c(tier,
-                                zpeer_assess,
-                                zjudges_assess,
-                                zgpa25,
-                                zgpa75,
-                                zlsat25,
+                                #zpeer_assess,
+                                #zjudges_assess,
+                                #zgpa25,
+                                #zgpa75,
+                                #zlsat25,
                                 zlsat75,
-                                zpct_emp_grad,
+                                #zpct_emp_grad,
                                 zpct_emp_9,
                                 zaccept,
-                                zsf_ratio,
+                                #zsf_ratio,
                                 zbar_pass_pct))
 
 
@@ -169,8 +172,4 @@ write.table(cat.training.data,
             col.names=TRUE,
             na = "")
 
-rm(training.data)
-rm(testing.data)
-rm(cat.training.data)
-rm(cat.testing.data)
-rm(original.data)
+rm(list=ls())

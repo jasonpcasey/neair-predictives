@@ -11,7 +11,18 @@ body <- dashboardBody(
   tabItems(
     tabItem(tabName = "dashboard",
             h2("Model Comparisons"),
-            box(tableOutput('data'))
+            fluidRow(
+              box(tableOutput('data')),
+              box(verbatimTextOutput('classif'))
+            ),
+            fluidRow(
+              box(plotOutput('scatter1')),
+              box(plotOutput('scatter2'))
+            ),
+            fluidRow(
+              box(plotOutput('scatter3')),
+              box(plotOutput('scatter4'))
+            )
     ),
     
     tabItem(tabName = "slides",
