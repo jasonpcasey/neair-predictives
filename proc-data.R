@@ -31,7 +31,8 @@ getData <- function() {
   dat$zbar_pass_pct <- as.numeric(scale(dat$bar_pass_pct, center = TRUE, scale = TRUE))
   
   # Make categorical variable
-  dat$tier <- factor(ifelse(dat$rank < 17, 'Top','Other'))
+  # dat$tier <- factor(ifelse(dat$rank < 17, 'Top','Other'))
+  dat$tier <- factor(ifelse(dat$rank > 137, 'Bottom','Other'))
   
   # Standard subset for return
   dat <- subset(dat,
@@ -99,7 +100,7 @@ testing.data <- subset(original.data,
 cat.training.data <- subset(original.data,
                         year==2015,
                         select=c(tier,
-                                 #zpeer_assess,
+                                 zpeer_assess,
                                  #zjudges_assess,
                                  #zgpa25,
                                  #zgpa75,
@@ -114,7 +115,7 @@ cat.training.data <- subset(original.data,
 cat.testing.data <- subset(original.data,
                        year==2016,
                        select=c(tier,
-                                #zpeer_assess,
+                                zpeer_assess,
                                 #zjudges_assess,
                                 #zgpa25,
                                 #zgpa75,
@@ -172,4 +173,4 @@ write.table(cat.training.data,
             col.names=TRUE,
             na = "")
 
-rm(list=ls())
+#rm(list=ls())

@@ -1,6 +1,6 @@
 sidebar <- dashboardSidebar(
   sidebarMenu(
-    menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
+    menuItem("Regression", tabName = "regmods", icon = icon("dashboard")),
     menuItem("Slides", icon = icon("list"), tabName = "slides"),
     # menuItem("Widgets", icon = icon("th"), tabName = "widgets"),
     menuItem("Charts", icon = icon("bar-chart"), tabName="charts")
@@ -9,7 +9,7 @@ sidebar <- dashboardSidebar(
 
 body <- dashboardBody(
   tabItems(
-    tabItem(tabName = "dashboard",
+    tabItem(tabName = "regmods",
             h2("Model Comparisons"),
             fluidRow(
               box(tableOutput('data')),
@@ -23,8 +23,8 @@ body <- dashboardBody(
               box(plotOutput('scatter3')),
               box(plotOutput('scatter4'))
             )
-    ),
-    
+      ),
+
     tabItem(tabName = "slides",
             h2("Slides tab content"),
             fluidRow(

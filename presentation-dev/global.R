@@ -142,7 +142,7 @@ predrf <- predict(rf, testing.data)
 
 #cpredlr <- predict(clr, cat.testing.data)
 clr.probs <- predict(clr, cat.testing.data, type = "response")
-cpredlr <- ifelse(clr.probs > 0.5, "Top", "Other")
+cpredlr <- ifelse(clr.probs > 0.5, "Bottom", "Other")
 #results_lr[index_subj] <- predictions_lr
 
 cpredsvu <- predict(csvu, cat.testing.data)
