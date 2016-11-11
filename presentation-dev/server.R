@@ -1,9 +1,32 @@
 function(input, output, session) {
   #
   output$data <- renderTable(reg.model.compare)
-  output$classif <- renderPrint(table(cpredlr, cat.testing.data$tier))
-  output$scatter1 <- renderPlot(predPlot(predlr, testing.data$overall))
-  output$scatter2 <- renderPlot(predPlot(predsvu, testing.data$overall))
-  output$scatter3 <- renderPlot(predPlot(predsvt, testing.data$overall))
-  output$scatter4 <- renderPlot(predPlot(predrf, testing.data$overall))
+  output$regsumm <- renderPrint(summary(lr))
+  output$reganov <- renderPrint(anova(lr))
+  output$treesumm <- renderPrint(print(tr))
+  output$treeplot <- renderPlot({plot(tr)
+                                #text(tr, 
+                                     #use.n=TRUE, 
+                                     #all=TRUE, 
+                                     #cex=0.95)
+    })
+  output$rfsumm <- renderPrint(print(rf))
+  output$rfimp <- renderPrint(importance(rf))
+  output$svrsumm1 <- renderDataTable({ 
+    cbind(predsvu, testing.data)
+  })
+  output$svuplot <- renderPlot({ plotMe(predsvu,
+                                        testing.data$overall,
+                                        'Predicted',
+                                        'Observed',
+                                        'Predicted vs Observed')})
+  output$svrsumm2 <- renderDataTable({ 
+    cbind(predsvt, testing.data)
+  })
+  output$svtplot <- renderPlot({ plotMe(predsvt,
+                                        testing.data$overall,
+                                        'Predicted',
+                                        'Observed',
+                                        'Predicted vs Observed')})
+  output$viplot <- renderPlot(varImpPlot(rf, main=NULL))
 }
