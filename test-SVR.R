@@ -44,7 +44,7 @@ rmse <- function(error)
   sqrt(mean(error^2))
 }
 
-train <- read.table(file='data/nonlin.csv',
+svr.example <- read.table(file='data/nonlin.csv',
                   header=TRUE,
                   sep=",",
                   quote="\"",
@@ -55,44 +55,44 @@ train <- read.table(file='data/nonlin.csv',
 resid <- data.frame(Model=NULL,Desc=NULL, RMSE=NULL)
 
 # Plot the data
-plot(train$x, train$y, pch=16)
+plot(svr.example$x, svr.example$y, pch=16)
 
 # Create a linear regression model
-model <- lm(y ~ x, train)
+model <- lm(y ~ x, svr.example)
 
 # Add the fitted line
 #abline(model)
 
 # make a prediction for each x
-train$RegPredictedY <- predict(model, train)
+svr.example$RegPredictedY <- predict(model, svr.example)
 
 # display the predictions
-points(train$x, train$RegPredictedY, col = "blue", pch=1)
+points(svr.example$x, svr.example$RegPredictedY, col = "blue", pch=1)
 
-error <- model$residuals  # same as train$y - predictedY
+error <- model$residuals  # same as svr.example$y - predictedY
 #predictionRMSE <- rmse(error)   # 5.703778
 resid <- rbind(resid, data.frame(Model='A', Desc='Linear Regression', RMSE=rmse(error)))
 rm(error)
 
-model <- svm(y ~ x , train)
+model <- svm(y ~ x , svr.example)
 
-train$SVUPredictedY <- predict(model, train)
+svr.example$SVUPredictedY <- predict(model, svr.example)
 
-points(train$x, train$SVUPredictedY, col = "red", pch=4)
-lines(train$x, train$SVUPredictedY, col = "red", lty=1)
+points(svr.example$x, svr.example$SVUPredictedY, col = "red", pch=4)
+lines(svr.example$x, svr.example$SVUPredictedY, col = "red", lty=1)
 
-error <- train$y - train$SVUPredictedY
+error <- svr.example$y - svr.example$SVUPredictedY
 #svrPredictionRMSE <- rmse(error)  # 3.157061
 resid <- rbind(resid, data.frame(Model='B', Desc='Untuned SVR', RMSE=rmse(error)))
 
-tuneResult <- tune(svm, y ~ x,  data = train,
+tuneResult <- tune(svm, y ~ x,  data = svr.example,
                    ranges = list(epsilon = seq(0,1,0.1), cost = 2^(2:9)))
 print(tuneResult)
 # best performance: MSE = 8.371412, RMSE = 2.89 epsilon 1e-04 cost 4
 # Draw the tuning graph
 plot(tuneResult)
 
-tuneResult <- tune(svm, y ~ x,  data = train,
+tuneResult <- tune(svm, y ~ x,  data = svr.example,
                    ranges = list(epsilon = seq(0,0.2,0.01), cost = 2^(2:9))
 ) 
 
@@ -101,9 +101,9 @@ plot(tuneResult)
 
 tunedModel <- tuneResult$best.model
 #tunedModelY <- predict(tunedModel, data) 
-train$SVTPredictedY <- predict(tunedModel, train)
+svr.example$SVTPredictedY <- predict(tunedModel, svr.example)
 
-error <- train$y - train$SVTPredictedY  
+error <- svr.example$y - svr.example$SVTPredictedY  
 
 # this value can be different on your computer
 # because the tune method  randomly shuffles the data
@@ -114,19 +114,28 @@ resid <- rbind(resid, data.frame(Model='C', Desc='Tuned SVR', RMSE=rmse(error)))
 plot(0,
      xlab="x",
      ylab="y",
-     xlim=c(min(train$x),max(train$x)),
-     ylim=c(min(train$y),max(train$y)),
+     xlim=c(min(svr.example$x),max(svr.example$x)),
+     ylim=c(min(svr.example$y),max(svr.example$y)),
      type='n')
 grid(NULL,NULL, col="#DEDEDE",lty="solid", lwd=0.9)
-points(train$x, train$y, col = "black", pch=16)
-points(train$x, train$SVUPredictedY, col = "blue", pch=4)
-lines(train$x, train$SVUPredictedY, col="blue", pch=4)
-points(train$x, train$SVTPredictedY, col = "red", pch=1)
-lines(train$x, train$SVTPredictedY, col="red", pch=4)
+# observations
+points(svr.example$x, svr.example$y, col = "black", pch=16)
 
-plotMe(train$RegPredictedY, train$y, 'Predicted','Observed','Linear Regression')
-plotMe(train$SVUPredictedY, train$y, 'Predicted','Observed','Untuned SVR')
-plotMe(train$SVTPredictedY, train$y, 'Predicted','Observed','Tuned SVR')
+# linear model predictions
+points(svr.example$x, svr.example$RegPredictedY, col = "purple", pch=1)
+lines(svr.example$x, svr.example$RegPredictedY, col = "purple", pch=2)
+
+# Untuned SVR model predictions
+points(svr.example$x, svr.example$SVUPredictedY, col = "blue", pch=4)
+lines(svr.example$x, svr.example$SVUPredictedY, col="blue", pch=4)
+
+# tuned SVR model predictions
+points(svr.example$x, svr.example$SVTPredictedY, col = "red", pch=1)
+lines(svr.example$x, svr.example$SVTPredictedY, col="red", pch=4)
+
+#plotMe(svr.example$RegPredictedY, svr.example$y, 'Predicted','Observed','Linear Regression')
+#plotMe(svr.example$SVUPredictedY, svr.example$y, 'Predicted','Observed','Untuned SVR')
+#plotMe(svr.example$SVTPredictedY, svr.example$y, 'Predicted','Observed','Tuned SVR')
 
 
 resid

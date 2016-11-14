@@ -29,4 +29,5 @@ function(input, output, session) {
                                         'Observed',
                                         'Predicted vs Observed')})
   output$viplot <- renderPlot(varImpPlot(rf, main=NULL))
+  
 }
