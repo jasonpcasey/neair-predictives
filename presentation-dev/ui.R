@@ -15,17 +15,6 @@ sidebar <- dashboardSidebar(
 
 body <- dashboardBody(
   tabItems(
-    tabItem(tabName = "overview",
-            h1("Models Examined"),
-            tags$h2('Linear Regression'),
-            tags$h2('Regression Tree (Classification Tree via ANOVA Method)'),
-            tags$h2('Random Forest'),
-            tags$h2('Support Vector Regression (Untuned)'),
-            tags$h2('Support Vector Regression (Tuned)'),
-            hr(),
-            tags$h2('All presentation data and files can be found at:'),
-            div(style="display:inline-block;width:100%;padding-left:10px;font-size: 30px;color:blue",
-                p("https://github.com/jasonpcasey/neair-predictives"))),
     tabItem(tabName="regress",
             h2("Linear Regression Output"),
             fluidRow(
