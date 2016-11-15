@@ -4,11 +4,8 @@ function(input, output, session) {
   output$regsumm <- renderPrint(summary(lr))
   output$reganov <- renderPrint(anova(lr))
   output$treesumm <- renderPrint(print(tr))
-  output$treeplot <- renderPlot({plot(tr)
-                                #text(tr, 
-                                     #use.n=TRUE, 
-                                     #all=TRUE, 
-                                     #cex=0.95)
+  output$treeplot <- renderPlot({
+    plot(tr)
     })
   output$rfsumm <- renderPrint(print(rf))
   output$rfimp <- renderPrint(importance(rf))
@@ -29,5 +26,9 @@ function(input, output, session) {
                                         'Observed',
                                         'Predicted vs Observed')})
   output$viplot <- renderPlot(varImpPlot(rf, main=NULL))
+
+  output$varimptab <- renderTable({
+    summ
+  })
   
 }

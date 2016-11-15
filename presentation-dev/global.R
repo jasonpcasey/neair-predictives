@@ -4,6 +4,9 @@ library(e1071)
 library(randomForest)
 library(rpart)
 library(party)
+library(rpart.plot)
+library(rattle)
+library(partykit)
 
 # pal <- c('lightgray', 'darkblue', 'red')
 # 
@@ -172,46 +175,9 @@ reg.model.compare <- rbind(reg.model.compare,
                                       Testing.Rsq=rsq(error, testing.data$overall),
                                       RMSE=rmse(error)))
 
-# error terms data frame
-resid <- data.frame(Model=NULL,Desc=NULL, RMSE=NULL)
 
-# Create a linear regression model
-model <- lm(y ~ x, svr.example)
+summ <- data.frame(Regression=c('lsat75','gpa25','pct_emp_9','pct_emp_grad','sf_ratio','lsat25'),
+                   CART=c('lsat75','pct_emp_9','gpa75','gpa25','-','-'),
+                   RandForest=c('lsat75','lsat25','gpa25','gpa75','pct_emp_grad','pct_emp_9'),
+                   SVR=c('-','-','-','-','-','-'))
 
-# make a prediction for each x
-svr.example$RegPredictedY <- predict(model, svr.example)
-
-# display the predictions
-points(svr.example$x, svr.example$RegPredictedY, col = "blue", pch=1)
-
-error <- model$residuals  # same as svr.example$y - predictedY
-
-resid <- rbind(resid, data.frame(Model='A', Desc='Linear Regression', RMSE=rmse(error)))
-
-model <- svm(y ~ x , svr.example)
-
-svr.example$SVUPredictedY <- predict(model, svr.example)
-
-error <- svr.example$y - svr.example$SVUPredictedY
-
-resid <- rbind(resid, data.frame(Model='B', Desc='Untuned SVR', RMSE=rmse(error)))
-
-tuneResult <- tune(svm, y ~ x,  data = svr.example,
-                   ranges = list(epsilon = seq(0,1,0.1), cost = 2^(2:9)))
-
-tuneResult <- tune(svm, y ~ x,  data = svr.example,
-                   ranges = list(epsilon = seq(0,0.2,0.01), cost = 2^(2:9))
-) 
-
-tunedModel <- tuneResult$best.model
-#tunedModelY <- predict(tunedModel, data) 
-svr.example$SVTPredictedY <- predict(tunedModel, svr.example)
-
-error <- svr.example$y - svr.example$SVTPredictedY  
-
-# this value can be different on your computer
-# because the tune method  randomly shuffles the data
-tunedModelRMSE <- rmse(error)  # 2.219642 
-resid <- rbind(resid, data.frame(Model='C', Desc='Tuned SVR', RMSE=rmse(error)))
-
-resid
