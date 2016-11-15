@@ -6,7 +6,6 @@ library(rpart)
 library(party)
 library(rpart.plot)
 library(rattle)
-library(partykit)
 
 # pal <- c('lightgray', 'darkblue', 'red')
 # 

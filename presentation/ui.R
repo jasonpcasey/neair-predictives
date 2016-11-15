@@ -1,12 +1,8 @@
 sidebar <- dashboardSidebar(
   sidebarMenu(
-    #menuItem("Overview", tabName = "overview", icon = icon("list")),
-    #menuItem("Out of Scope", tabName = "scope", icon = icon("list")),
     menuItem("Linear Regression", icon = icon("table"), tabName = "regress"),
     menuItem("Regression Tree", icon = icon("sitemap"), tabName = "tree"),
-    #menuItem("Random Forest Explained", icon = icon("paperclip"), tabName = "forestexp"),
     menuItem("Random Forest", icon = icon("tree"), tabName = "forest"),
-    #menuItem("SVR Explained", icon = icon("paperclip"), tabName = "svrexp"),
     menuItem("Support Vector Untuned", icon = icon("line-chart"), tabName = "svr1"),
     menuItem("Support Vector Tuned", icon = icon("line-chart"), tabName = "svr2"),
     menuItem("Summary", tabName = "regmods", icon = icon("th"))
