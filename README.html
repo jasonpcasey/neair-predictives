@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<title>NEAIR Predictives Repo</title>
+<body>
+
+<h1>This is a heading</h1>
+<p># neair-predictives</p>
+<p>Predictive techniques for institutional researchers using open source software.</p>
+
+<p>This project was created in support of the following presentation:</p>
+
+<p>Using Machine Learning Techniques to do Prediction in IR<br>
+Jason P. Casey<br>
+University of Notre Dame</p>
+
+<p>NEAIR Annual Conference<br>
+Baltimore, Maryland<br>
+November 12-15, 2016</p>
+
+<p>The main presentation displays can be found in the presentation folder.  Several scripts are available in the root directory
+for use in producing sample output and plots using techniques that were used in the presentation.</p>
+
+<p>Contents:</p>
+<ul>
+  <li>presentation (folder): Shiny app that produces basic output from the models presented
+  <li>usn-predictor (folder): Shiny app that models US News Law School Scores using restricted columns for demo purposes 
+  <li>data (folder): all data files used in presentation
+  <li>LICENSE: MIT license -- basically use freely, attribute if you share
+  <li>proc-data.R: data processing script that creates testing and training files for summaries
+  <li>README.md: You're reading it!
+  <li>samples.R: playing with models using random data.  Alter seed statement to create different sequences of samples
+  <li>svm-example-plots.R: SVM sample plots for presentation
+  <li>test-SVR.R: worked example of SVR using nonlinear data after this article: <a href="http://www.svm-tutorial.com/2014/10/support-vector-regression-r/">http://www.svm-tutorial.com/2014/10/support-vector-regression-r/</a>
+  <li>tree-plots.R: example tree plot using mtcars dataset</li>
+</ul>
+
+<p>A few notes on the usn-predictor app:</p>
+<ol>
+  <li>Some predictors were omitted to optimize the USN data for purposes of the presentation, notably, the peer assessment and judges' assessment.  Predictions are much more accurate when these predictors are included.</li>
+  <li>A linear regression model works well for this model should one wish to implement it in an institutional setting.</li>
+  <li>The Reset button is not wired up properly in the present version.  You have to hit reset and then Predict to reset to default values.  Still working on that!</li>
+  <li>It is clear that US News is basically a brand recognition survey.  There is much more reliability at the high end of the scale (i.e., the "top" brands), but much less so at the low end.  As a consequence, estimates become noisier and more uncertain as one moves down the scale.  (This hold true for ALL US News ranking scores).</li>
+  <li>Because the Overall Score is built using the predictors, any model (MLR, CART, Random Forest, SVR) will produce quite large R-squared values.</li>
+</ol>
+
+<p>Anyone with questions about my code, implementation, or even questions about setup and use are encouraged to contact me directly:<br>
+<a href="jcasey4@nd.edu">jcasey4@nd.edu</a><br>
+<a href="jazzerj@gmail.com">jazzerj@gmail.com</a></p>
+
+<p>--Jason</p>
+</body>
+</html>
