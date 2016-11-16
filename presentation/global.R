@@ -7,15 +7,6 @@ library(party)
 library(rpart.plot)
 library(rattle)
 
-# pal <- c('lightgray', 'darkblue', 'red')
-# 
-# def <- par(bty="l",
-#            las=1,
-#            bg="#F0F0F0",
-#            col.axis="#434343",
-#            col.main="#343434",
-#            cex=0.85,
-#            cex.axis=0.8)
 
 regressMod <- function(dat) {
   return(lm(overall ~ .,
@@ -38,7 +29,6 @@ svrMod <- function(dat,
 treeMod <- function(dat, method) {
   return(ctree(overall ~ .,
                data = dat#,
-               #method=method
                ))
 }
 
