@@ -12,7 +12,7 @@ NEAIR Annual Conference
 Baltimore, Maryland
 November 12-15, 2016
 
-The main presentation diplays can be found in the presentation folder.  Several scripts are available in the root directory
+The main presentation displays can be found in the presentation folder.  Several scripts are available in the root directory
 for use in producing sample output and plots using techniques that were used in the presentation.
 
 Contents:
