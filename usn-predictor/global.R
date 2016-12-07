@@ -40,7 +40,9 @@ makePlot <- function(dat, xvar, yvar) {
 }
 
 runModel <- function(dat) {
-  mod <- svm(overall ~ zgpa25 +
+  mod <- svm(overall ~ zpeer_assess +
+               zjudges_assess +
+               zgpa25 +
               zgpa75 +
               zlsat25 +
               zlsat75 +
@@ -90,8 +92,6 @@ getData <- function(selYear) {
   dat <- subset(dat,
                 year==selYear,
                 select=c(overall,
-                         peer_assess,
-                         judges_assess,
                          gpa25,
                          gpa75,
                          lsat25,
